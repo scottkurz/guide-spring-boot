@@ -48,23 +48,40 @@
       <plugin>
         <groupId>io.openliberty.tools</groupId>
         <artifactId>liberty-maven-plugin</artifactId>
-        <version>3.9</version>
+        <version>3.10</version>
         <configuration>
           <!-- tag::appsDirectory[] -->
           <appsDirectory>apps</appsDirectory>
           <!-- end::appsDirectory[] -->
-          <!-- tag::installAppPackages[] -->
-          <installAppPackages>spring-boot-project</installAppPackages>
-          <!-- end::installAppPackages[] -->
-          <!-- tag::include[] -->
-          <include>minify,runnable</include>
-          <!-- end::include[] -->
-          <!-- tag::packageFile[] -->
-          <packageName>GSSpringBootApp</packageName>
-          <!-- end::packageFile[] -->
+          <!-- tag::deployPackages[] -->
+          <deployPackages>spring-boot-project</deployPackages>
+          <!-- end::deployPackages[] -->
+          
         </configuration>
-        <!-- tag::packageGoals[] -->
-        <executions>
+
+      </plugin>
+      <!-- end::libertyMavenPlugin[] -->
+      <!-- End of Liberty Maven plugin -->
+
+        </plugins>
+    </build>
+<profiles>
+    <profile>
+      <id>libertyPackage</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+
+
+      <build>
+        <plugins>
+        <!-- Enable liberty-maven plugin -->
+          <plugin>
+            <groupId>io.openliberty.tools</groupId>
+            <artifactId>liberty-maven-plugin</artifactId>
+
+            <version>3.10</version>
+            <executions>        	
           <execution>
             <id>package-server</id>
             <phase>package</phase>
@@ -74,14 +91,21 @@
               <goal>deploy</goal>
               <goal>package</goal>
             </goals>
-          </execution>
-        </executions>
-        <!-- end::packageGoals[] -->
-      </plugin>
-      <!-- end::libertyMavenPlugin[] -->
-      <!-- End of Liberty Maven plugin -->
-
-        </plugins>
-    </build>
-
+            
+            <configuration>
+              <!-- tag::include[] -->
+              <include>minify,runnable</include>
+              <!-- end::include[] -->
+              <!-- tag::packageName[] -->
+              <packageName>GSSpringBootApp</packageName>
+              <!-- end::packageName[] -->
+            </configuration>
+           </execution>     
+         </executions>
+        </plugin>
+       </plugins>
+     </build>
+    </profile>
+  </profiles>
 </project>
+	
